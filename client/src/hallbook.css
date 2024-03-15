@@ -1,0 +1,126 @@
+.glow-button {
+  background-color: #6d7f69;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  border-radius: 15px;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 10px #007bff;
+}
+
+.active-link {
+  color: #6d7f69;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.icon-haver {
+  position: relative;
+}
+
+ul {
+  position: relative;
+}
+
+ul.flex li.active {
+  /* Change the color to your desired color */
+  color: #ff0000; /* Red color */
+}
+
+.marker {
+  position: absolute;
+  bottom: -3px; /* Adjust as needed */
+  left: 0;
+  width: 100px; /* Adjust width as needed */
+  height: 3px;
+  background-color: #007bff; /* Adjust color as needed */
+  transition: left 0.3s ease;
+}
+
+.active {
+  color: #007bff; /* Adjust color as needed */
+}
+nav {
+  position: relative;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+li {
+  margin-right: 20px;
+}
+
+a {
+  color: #000;
+  position: relative;
+}
+
+.marker {
+  position: absolute;
+  bottom: -10px; /* Adjust as needed */
+  left: 0;
+  height: 3px;
+  background-color: #007bff; /* Adjust color as needed */
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+.active {
+  color: #007bff; /* Adjust color as needed */
+}
+
+.active::after {
+  position: absolute;
+  bottom: -5px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #007bff; /* Adjust color as needed */
+  border-radius: 50%;
+}
+
+.head {
+  color: #6d7f69;
+}
+
+nav ul li a {
+  transition: background-color 0.4s ease-in-out;
+}
+
+nav ul li{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.glass-container {
+  background: url("../src/assets/bg.png"); /* Set your background image */
+  background-size: cover;
+  position: relative;
+  height: 400px; /* Adjust height as needed */
+}
+
+.content {
+  background-color: rgb(250, 250, 250, 0.2); /* Adjust opacity as needed */
+  padding: 20px;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px); /* Adjust blur amount as needed */
+  max-width: 300px; /* Adjust width as needed */
+  text-align: center;
+}
