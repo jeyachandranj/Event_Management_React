@@ -1,13 +1,13 @@
 const Booking = require('../model/bookingSchema');
 const Hall = require('../model/hallSchema');
 const User = require('../model/userSchema');
+const EventRegister = require('../model/eventregisterSchema');
 const nodemailer = require("nodemailer");
 
 
 
 
 
- // transporter for sending email
  const transporter = nodemailer.createTransport({
   service:"gmail",
   auth:{
@@ -131,6 +131,10 @@ const createBooking = async (req, res, next) => {
       organizingClub,
       phoneNumber,
       altNumber,
+      reglimit,
+      regamt,
+      eventType,
+      eventDescription,
       isApproved
     } = req.body;
 
@@ -225,6 +229,10 @@ const createBooking = async (req, res, next) => {
       // eventDetailText,
       phoneNumber,
       altNumber,
+      reglimit,
+      regamt,
+      eventType,
+      eventDescription,
       isApproved
     });
     // await booking.validate();
@@ -282,16 +290,59 @@ const getEvents = async (req, res, next) => {
 };
 
 
+const bookingEvent = async (req, res, next) => {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      transactionId,
+      bookingHallId,
+      rollno,
+      status,
+      Participationstatus,
+      eventName,
+      regamt,
+      createdAt
+      
+    } = req.body;
+    const booking = await Booking.findById(bookingHallId);
+    // console.log(booking);
+    if (!booking) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
 
+    const eventRegister = new EventRegister({
+      name,
+      email,
+      phone,
+      transactionId,
+      bookingHallId,
+      rollno,
+      status,
+      Participationstatus,
+      eventName,
+      regamt,
+      createdAt
+    });
+   
+    await eventRegister.save();
 
-
-
-
-
-
-
-
-
+   
+  /*
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+    */
+    res.status(201).json({ message: 'EventRegister  successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 
@@ -325,7 +376,37 @@ const getBookingById = async (req, res, next) => {
     next(error);
   }
 };
+ 
+const getRegistrationById = async (req, res, next) => {
+  
 
+  try {
+    const { bookingId } = req.params;
+    const bookingHallId = bookingId;
+    const eventRegister = await EventRegister.find({bookingHallId});
+    if (!eventRegister) {
+      return res.status(404).json({ message: 'eventRegister not found' });
+    }
+    res.json({ eventRegister });
+  }catch (error) {
+    next(error);
+  }
+};
+const getRegistrationByStudent = async (req, res, next) => {
+  console.log("hi")
+  try {
+    const phone = req.rootUser.phone;
+    console.log("phone",phone);
+    const eventRegister = await EventRegister.find({phone});
+    console.log("event",eventRegister);
+    if (!eventRegister) {
+      return res.status(404).json({ message: 'eventRegister not found' });
+    }
+    res.json({ eventRegister });
+  }catch (error) {
+    next(error);
+  }
+};
 const getBookingByUserId = async (req, res, next) => {
   try {
     // const { userId } = req.params;
@@ -351,7 +432,7 @@ const getBookingAdmin = async (req, res, next) => {
     const userId = req.rootUser._id;
     // console.log("admin bookng");
     // console.log(adminEmail);
-    if ("false" != "true") {
+    if ("true" != "true") {
       statusArray.unshift("Request Sent"); // Add "Request Sent" at the beginning if HOD feature is on
     }
 
@@ -450,6 +531,50 @@ const updateBooking = async (req, res, next) => {
     next(error);
   }
 };
+
+const updateEventRegistration = async (req, res, next) => {
+  try {
+    const { bookingId } = req.params;
+    console.log("bookingId",bookingId);
+    const { status } = req.body;
+    const eventRegister = await EventRegister.findByIdAndUpdate(
+      bookingId,
+      {
+        status,
+      }
+    )
+    console.log("s",status);
+
+    if (!eventRegister) {
+      return res.status(404).json({ message: 'eventRegister not found' });
+    }
+    res.json({ message: 'eventRegister updated successfully', eventRegister });
+  } catch (error) {
+    next(error);
+  }
+}
+
+const updateEventRegistrationStatus = async (req, res, next) => {
+  try {
+    const { bookingId } = req.params;
+    console.log("bookingId",bookingId);
+    const { Participationstatus } = req.body;
+    const eventRegister = await EventRegister.findByIdAndUpdate(
+      bookingId,
+      {
+        Participationstatus,
+      }
+    )
+    console.log("ps",Participationstatus);
+
+    if (!eventRegister) {
+      return res.status(404).json({ message: 'eventRegister not found' });
+    }
+    res.json({ message: 'eventRegister updated successfully', eventRegister });
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
@@ -696,4 +821,4 @@ const deleteBooking = async (req, res, next) => {
   }
 };
 
-module.exports = { createBooking, getBookings, getBookingById, updateBooking, deleteBooking, getBookingByUserId, getEvents,getBookingAdmin ,getBookingHod};
+module.exports = { createBooking, getBookings, getBookingById, updateBooking, deleteBooking, getBookingByUserId, getEvents,getBookingAdmin ,getBookingHod,bookingEvent,getRegistrationById,updateEventRegistration,updateEventRegistrationStatus,getRegistrationByStudent};

@@ -13,12 +13,10 @@ const userSchema = new mongoose.Schema({
   },
   institution:{
     type: String,
-    required: true
   },
   department:{
-    type: String,
-    required: true
-  },
+    type: String
+    },
   phone: {
     type: Number,
     require: true,
@@ -30,6 +28,10 @@ const userSchema = new mongoose.Schema({
   adminKey: {
     type: String,
     require: true,
+  },
+  rollno:{
+    type: String,
+    require: true
   },
   password: {
     type: String,

@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken")
 
 const register = async (req, res,next) => {
   try {
-    const { name, email,institution,department, phone, userType,adminKey, password, cpassword } = req.body;
+    const { name, email,institution,department, phone, userType,adminKey, password, cpassword,rollno } = req.body;
   // console.log(process.env.ADMIN_KEY);
   const hodExist = await User.findOne({ department , userType: "hod" });
 
@@ -21,7 +21,13 @@ const register = async (req, res,next) => {
       }else if(adminKey !== "adminkey"){
         return res.status(422).json({ error: "Provided Admin Key is Invalid." });
       }
-    }else if(userType === "hod"){
+    }else if (userType === "student") {
+
+      if (!name || !rollno || !email || !phone || !userType || !password || !cpassword) {
+        return res.status(422).json({ error: "Kindly complete all fields." });
+      }
+    }
+    else if(userType === "hod"){
       if (!name || !institution || !department || !email || !phone || !userType || !password || !cpassword) {
         return res.status(422).json({ error: "Kindly complete all fields." });
       }else if(hodExist){
@@ -32,6 +38,8 @@ const register = async (req, res,next) => {
         return res.status(422).json({ error: "Kindly complete all fields." });
       }
     }
+
+    
 
    
     
@@ -70,11 +78,15 @@ if (!konguEmailRegex.test(email) && !konguEduEmailRegex.test(email)) {
        else {
         let user
         if (userType === "admin") {
-           user = new User({ name, email, phone, userType,adminKey,institution:"null",department:"null", password, cpassword });
+           user = new User({ name, email, phone, userType,adminKey,institution:"null",department:"null", password, cpassword ,rollno:"null"});
 
-        }else{
+        }else if(userType === "student")
+        {
+          user = new User({ name, email, phone, userType,adminKey:"null",institution,department, password, cpassword ,rollno});
+        }
+        else{
         
-           user = new User({ name, email, phone, userType,institution,department,adminKey:"null" ,password, cpassword });
+           user = new User({ name, email, phone, userType,institution,department,adminKey:"null" ,password, cpassword,rollno:"null" });
         }
         // console.log(user);
         // Perform additional validation or data processing here
@@ -559,9 +571,9 @@ const login = async (req, res,next) => {
 
 
   const about = async (req, res) => {
-    // console.log("about page");
+    console.log("about page",req.rootUser.phone);
     res.send(req.rootUser);
-  }
+      }
   
   const getdata = async (req, res) => {
     res.send(req.rootUser);
