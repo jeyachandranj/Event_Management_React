@@ -262,7 +262,7 @@ const BookingForm = () => {
                         className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         htmlFor="grid-organizing-club"
                       >
-                        Organizing Club
+                        Cultural Name
                       </label>
                       <input
                         value={bookingData.organizingClub}

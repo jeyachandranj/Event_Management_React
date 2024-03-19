@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
 import { toast } from "react-toastify";
-import { DepartmentList, InstitutionList } from "./Institutions";
+import { ClubList, InstitutionList } from "./Institutions";
 const About = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -98,7 +98,7 @@ const About = () => {
 
 
   const institutionName = InstitutionList[userData.institution] || userData.institution;
-  const departmentName = DepartmentList[userData.department] || userData.department;
+  const departmentName = ClubList[userData.department] || userData.department;
   return (
     <>
       {isLoading ? (

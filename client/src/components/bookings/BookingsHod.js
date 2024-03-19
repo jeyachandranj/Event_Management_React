@@ -234,7 +234,7 @@ const BookingsHod = () => {
             className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Rejected By HOD" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800   hover:bg-gray-100"}`}
             onClick={() => handleFilter("Rejected By HOD")}
           >
-            Rejected By Hod
+            Rejected By Club Head
           </button>
           <button
             className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Approved By Admin" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800 hover:bg-gray-100"}`}
@@ -290,11 +290,11 @@ const BookingsHod = () => {
                         Hall Name
                       </th>
                       <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                        Organizing Club
+                        Cultural Name
 
                       </th>
                       <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                        Department
+                        Club Name
                       </th>
                       <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
                         Event Date

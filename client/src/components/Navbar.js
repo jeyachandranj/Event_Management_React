@@ -42,7 +42,18 @@ const Navbar = () => {
                   }}>Bookings</Link>
         </div>
       );
-    } else {
+    } else if (state.userType === "student") {
+      return (
+        <div>
+          <Link to="/bookingstudent" style={{
+                    backgroundColor: activeTab === "bookings" ? "#ffffff" : "#6d7f69",
+                    padding: "8px 12px", // Adjust padding as needed
+                    textDecoration: "none",
+                    borderRadius: "8px",
+                  }}>Bookings</Link>
+        </div>
+      );
+    }else {
       return (
         <div>
           <Link to="/halls">Halls</Link>

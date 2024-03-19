@@ -82,7 +82,7 @@ const Halls = () => {
                 style={{
                   padding: "5px 10px",
                   borderRadius: "5px",
-                  backgroundColor: "#6d7f69",
+                  backgroundColor: "#6d7f69", 
                   color: "#fff",
                   border: "none",
                   cursor: "pointer",
@@ -223,8 +223,9 @@ const Halls = () => {
                               handleBookingClick(hall._id, hall.name)
                             }
                           >
-                            Book Now
+                            Book Hall
                           </button>
+                          
                           {/* </Link> */}
                           {/* <button className="w-full rounded-xl border-2 border-blue-500 bg-white px-3 py-2 font-semibold text-blue-500 hover:bg-blue-500 hover:text-white">
                   View Profile

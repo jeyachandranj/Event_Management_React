@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner";
 import { toast } from "react-toastify";
-import { institutions, InstitutionList, DepartmentList } from "../Institutions"; // Update the path as needed
+import { institutions, InstitutionList, ClubList } from "../Institutions"; // Update the path as needed
 import "../../assets/KEC_BG.jpg";
 
 const Signup = () => {
@@ -21,6 +21,7 @@ const Signup = () => {
     password: "",
     cpassword: "",
     adminKey: "",
+    rollno: "",
   });
 
   let name, value;
@@ -28,7 +29,7 @@ const Signup = () => {
     name = e.target.name;
     value = e.target.value;
     setUser({ ...user, [name]: value });
-    console.log(user)
+    console.log(user);
   };
 
   const PostData = async (e) => {
@@ -44,6 +45,7 @@ const Signup = () => {
       adminKey,
       password,
       cpassword,
+      rollno,
     } = user;
 
     try {
@@ -59,6 +61,7 @@ const Signup = () => {
           adminKey,
           password,
           cpassword,
+          rollno,
         },
         {
           headers: {
@@ -86,16 +89,23 @@ const Signup = () => {
         <LoadingSpinner />
       ) : (
         <section className="text-gray-600 body-font my-10  min-h-screen flex items-center justify-center bg-white relative">
-          <div className="absolute inset-0 z-0 bg-cover bg-center" style={{ backgroundImage: 'url("KEC_BG.jpg")', filter: 'blur(3px)' }}></div>
+          <div
+            className="absolute inset-0 z-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url("KEC_BG.jpg")',
+              filter: "blur(3px)",
+            }}
+          ></div>
           <div className="lg:w-2/6 md:w-1/2 my-10 bg-white shadow-2xl shadow-blue-200 rounded-lg p-8 flex flex-col md:ml-auto md:mr-auto mt-10 md:mt-0 relative z-10">
             <form method="POST">
               <h3 className="text-3xl my-8 sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900">
-                Sign <span style={{"color":"#6d7f69"}}>Up</span>
+                Sign <span style={{ color: "#6d7f69" }}>Up</span>
               </h3>
               <div className="relative mb-4">
                 <label
                   htmlFor="full-name"
-                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                >
                   Full Name
                 </label>
                 <input
@@ -112,7 +122,8 @@ const Signup = () => {
               <div className="relative mb-4">
                 <label
                   htmlFor="email"
-                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                >
                   Email
                 </label>
                 <input
@@ -130,7 +141,8 @@ const Signup = () => {
               <div className="relative mb-4">
                 <label
                   htmlFor="phone"
-                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                >
                   Phone
                 </label>
                 <input
@@ -149,7 +161,8 @@ const Signup = () => {
               <div className="relative mb-4">
                 <label
                   htmlFor="userType"
-                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                >
                   Your Role
                 </label>
 
@@ -158,17 +171,15 @@ const Signup = () => {
                   id="userType"
                   name="userType"
                   value={user.userType}
-                  onChange={handleInputs}>
+                  onChange={handleInputs}
+                >
                   <option value="">Select</option>
+                  <option value="student">Student</option>
 
-                  <option value="faculty">Faculty</option>
-                  {"false" === "true" && (
-                    <option value="hod">HOD</option>
-                  )}
+                  <option value="faculty">Club Member</option>
+                  {"true" === "true" && <option value="hod">Club Head</option>}
 
-                  {"true" === "true" && (
-                    <option value="admin">Admin</option>
-                  )}
+                  {"true" === "true" && <option value="admin">Admin</option>}
                 </select>
               </div>
 
@@ -177,7 +188,8 @@ const Signup = () => {
                   <div className="relative mb-4">
                     <label
                       htmlFor="adminKey"
-                      className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                      className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                    >
                       Admin Key
                     </label>
                     <input
@@ -192,292 +204,136 @@ const Signup = () => {
                     />
                   </div>
                 </>
+                ) : user.userType === "student" ? (
+                  <>
+                     <div className="relative mb-4">
+                    <label
+                      htmlFor="rollno"
+                      className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                    >
+                      Roll No
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={user.rollno}
+                      onChange={handleInputs}
+                      id="rollno"
+                      name="rollno"
+                      placeholder="Roll No"
+                      className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                  </div>
+
+                  
+                  {/* Department Dropdown */}
+                  {user.institution && (
+                    <div className="relative mb-4">
+                      <label
+                        htmlFor="department"
+                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                      >
+                        ClubList
+                      </label>
+                      <select
+                        value={user.department}
+                        onChange={handleInputs}
+                        id="department"
+                        name="department"
+                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      >
+                        <option value="">Select</option>
+                        {institutions
+                          .find(
+                            (inst) =>
+                              inst.name === InstitutionList[user.institution]
+                          )
+                          ?.departments.map((dept, index) => (
+                            <option
+                              key={index}
+                              value={Object.keys(ClubList).find(
+                                (key) => ClubList[key] === dept
+                              )}
+                            >
+                              {dept}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  )}
+                  </>
               ) : (
                 <>
-
-
-
-{/* Institution Dropdown */}
-<div className="relative mb-4">
-  <label
-    htmlFor="institution"
-    className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
-  >
-    Institution
-  </label>
-  <select
-    value={user.institution}
-    onChange={handleInputs}
-    id="institution"
-    name="institution"
-    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-  >
-    <option value="">Select</option>
-    {Object.keys(InstitutionList).map((key) => (
-      <option key={key} value={key}>
-        {InstitutionList[key]}
-      </option>
-    ))}
-  </select>
-</div>
-
-{/* Department Dropdown */}
-{user.institution && (
-  <div className="relative mb-4">
-    <label
-      htmlFor="department"
-      className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
-    >
-      Department
-    </label>
-    <select
-      value={user.department}
-      onChange={handleInputs}
-      id="department"
-      name="department"
-      className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-    >
-      <option value="">Select</option>
-      {institutions
-        .find((inst) => inst.name === InstitutionList[user.institution])
-        ?.departments.map((dept, index) => (
-          <option key={index} value={Object.keys(DepartmentList).find(key => DepartmentList[key] === dept)}>
-            {dept}
-          </option>
-        ))}
-    </select>
-  </div>
-)}
-
-
-
-{/* 
-
-
-
-
-
+                  {/* Institution Dropdown */}
                   <div className="relative mb-4">
                     <label
                       htmlFor="institution"
-                      className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                      className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                    >
                       Institution
                     </label>
-
                     <select
-                      className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      value={user.institution}
+                      onChange={handleInputs}
                       id="institution"
                       name="institution"
-                      value={user.institution}
-                      onChange={handleInputs}>
+                      className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    >
                       <option value="">Select</option>
-                      <option value="AITR">
-                        Acropolis Institute of Technology and Research
-                      </option>
-                      <option value="AIMSR">
-                        Acropolis Institute of Management Studies & Research
-                      </option>
-                      <option value="AIPER">
-                        Acropolis Institute Of Pharmaceutical Education &
-                        Research
-                      </option>
-                      <option value="AMR">
-                        Acropolis Faculty of Management and Research
-                      </option>
-                      <option value="AILAW">Acropolis Institute of LAW</option>
-
-                      <option value="CDC">Career Development Cell</option>
-                      <option value="AC">Acro Care</option>
+                      {Object.keys(InstitutionList).map((key) => (
+                        <option key={key} value={key}>
+                          {InstitutionList[key]}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
-                  {user.institution === "AIPER" && (
+                  {/* Department Dropdown */}
+                  {user.institution && (
                     <div className="relative mb-4">
                       <label
                         htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
+                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                      >
+                        ClubList
                       </label>
-
                       <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        value={user.department}
+                        onChange={handleInputs}
                         id="department"
                         name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
+                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      >
                         <option value="">Select</option>
-                        <option value="AIPER">
-                          Acropolis Institute Of Pharmaceutical Education &
-                          Research
-                        </option>
+                        {institutions
+                          .find(
+                            (inst) =>
+                              inst.name === InstitutionList[user.institution]
+                          )
+                          ?.departments.map((dept, index) => (
+                            <option
+                              key={index}
+                              value={Object.keys(ClubList).find(
+                                (key) => ClubList[key] === dept
+                              )}
+                            >
+                              {dept}
+                            </option>
+                          ))}
                       </select>
                     </div>
                   )}
 
-                  {user.institution === "CDC" && (
-                    <div className="relative mb-4">
-                      <label
-                        htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
-                      </label>
+                  {/* 
 
-                      <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        id="department"
-                        name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
-                        <option value="">Select</option>
-                        <option value="CDC">Career Development Cell</option>
-                        <option value="EDC">EDC</option>
-                        <option value="PLACEMENT">Placement</option>
-                        <option value="TRAINING">Training</option>
-                        <option value="IIPC">IIPC</option>
-                      </select>
-                    </div>
-                  )}
-
-                  {user.institution === "AC" && (
-                    <div className="relative mb-4">
-                      <label
-                        htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
-                      </label>
-
-                      <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        id="department"
-                        name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
-                        <option value="">Select</option>
-                        <option value="AC">Acro Care</option>
-                      </select>
-                    </div>
-                  )}
-
-                  {user.institution === "AILAW" && (
-                    <div className="relative mb-4">
-                      <label
-                        htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
-                      </label>
-
-                      <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        id="department"
-                        name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
-                        <option value="">Select</option>
-                        <option value="AILAW">
-                          Acropolis Institute of LAW
-                        </option>
-                      </select>
-                    </div>
-                  )}
-
-                  {user.institution === "AMR" && (
-                    <div className="relative mb-4">
-                      <label
-                        htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
-                      </label>
-
-                      <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        id="department"
-                        name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
-                        <option value="">Select</option>
-                        <option value="AMR">
-                          Acropolis Faculty of Management and Research
-                        </option>
-                      </select>
-                    </div>
-                  )}
-
-                  {user.institution === "AIMSR" && (
-                    <div className="relative mb-4">
-                      <label
-                        htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
-                      </label>
-
-                      <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        id="department"
-                        name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
-                        <option value="">Select</option>
-                        <option value="BSC">Bio Science</option>
-                        <option value="BBA">
-                          Bachelor of Business Administration
-                        </option>
-                        <option value="AIMSR">
-                          Acropolis Institute of Management Studies & Research
-                        </option>
-                      </select>
-                    </div>
-                  )}
-
-                  {user.institution === "AITR" && (
-                    <div className="relative mb-4">
-                      <label
-                        htmlFor="department"
-                        className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                        Department
-                      </label>
-
-                      <select
-                        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        id="department"
-                        name="department"
-                        value={user.department}
-                        onChange={handleInputs}>
-                        <option value="">Select</option>
-                        <option value="CE">Civil Engineering</option>
-                        <option value="ME">Mechanical Engineering</option>
-                        <option value="EC">Electronics & Communication</option>
-                        <option value="CSE">
-                          Computer Science & Engineering
-                        </option>
-                        <option value="AIML">
-                          Artificial Intelligence and Machine Learning
-                        </option>
-                        <option value="IT">Information Technology</option>
-                        <option value="CSIT">
-                          Computer Science and Information Technology
-                        </option>
-                        <option value="FCA">
-                          Faculty of Computer Applications
-                        </option>
-
-                        <option value="HUMI">Huminities</option>
-                        <option value="CHEM">Chemistry</option>
-                      </select>
-                    </div>
                   )} */}
                 </>
               )}
-
-
-
-
-
-
-
               <div className="relative mb-4">
                 <label
                   htmlFor="password"
-                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                >
                   Password
                 </label>
                 <input
@@ -494,7 +350,8 @@ const Signup = () => {
               <div className="relative mb-4">
                 <label
                   htmlFor="cpassword"
-                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+                  className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
+                >
                   Confirm Password
                 </label>
                 <input
@@ -517,7 +374,8 @@ const Signup = () => {
                   <button
                     type="submit"
                     onClick={PostData}
-                    className="text-white bg-indigo-600 shadow focus:shadow-outline focus:outline-none border-0 py-2 px-10 font-bold  hover:bg-indigo-800 rounded text-lg">
+                    className="text-white bg-indigo-600 shadow focus:shadow-outline focus:outline-none border-0 py-2 px-10 font-bold  hover:bg-indigo-800 rounded text-lg"
+                  >
                     Sign Up
                   </button>
                 </div>

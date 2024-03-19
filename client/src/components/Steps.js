@@ -13,7 +13,7 @@ export const RequestSent = () => {
 
   return (
     <>
-      {"false" === "true" ?
+      {"true" === "true" ?
         (
           <>
             <div className="w-full py-6">
@@ -53,7 +53,7 @@ export const RequestSent = () => {
                     </div>
                   </div>
 
-                  <div className="text-s font-semibold text-center md:text-base">Forwarded By HOD</div>
+                  <div className="text-s font-semibold text-center md:text-base">Forwarded By Club Head</div>
                 </div>
 
 
@@ -177,7 +177,7 @@ export const ApprovedByHod = () => {
               </div>
             </div>
 
-            <div className="text-s font-semibold text-center md:text-base">Approved By HOD</div>
+            <div className="text-s font-semibold text-center md:text-base">Approved By Club Head</div>
           </div>
 
 
@@ -217,7 +217,7 @@ export const ApprovedByAdmin = () => {
 
   return (
     <>
-      { "false" === "true" ?
+      { "true" === "true" ?
         (
           <>
             <div className="w-full py-6">
@@ -253,7 +253,7 @@ export const ApprovedByAdmin = () => {
                     </div>
                   </div>
 
-                  <div className="text-s font-semibold text-center md:text-base">Approved By HOD</div>
+                  <div className="text-s font-semibold text-center md:text-base">Approved By Club Head</div>
                 </div>
 
 
@@ -389,7 +389,7 @@ export const RejectedByHod = () => {
                 </div>
               </div>
 
-              <div className="text-s font-semibold text-center md:text-base">Rejected By HOD</div>
+              <div className="text-s font-semibold text-center md:text-base">Rejected By Club Head</div>
             </div>
 
 
@@ -428,7 +428,7 @@ export const RejectedByAdmin = () => {
 
 return (
       <>
-        {"false" === "true" ?
+        {"true" === "true" ?
           (
             <>
               <div className="w-full py-6">
@@ -464,7 +464,7 @@ return (
                       </div>
                     </div>
 
-                    <div className="text-s font-semibold text-center md:text-base">Forwarded By HOD</div>
+                    <div className="text-s font-semibold text-center md:text-base">Forwarded By Club Head</div>
                   </div>
 
 

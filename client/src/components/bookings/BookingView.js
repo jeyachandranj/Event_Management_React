@@ -14,7 +14,7 @@ import {
   RejectedByAdmin,
   RejectedByHod,
 } from "../Steps";
-import { DepartmentList, InstitutionList } from "../Institutions";
+import { ClubList, InstitutionList } from "../Institutions";
 const BookingsView = () => {
   const navigate = useNavigate();
   const { bookingId } = useParams();
@@ -192,7 +192,7 @@ const BookingsView = () => {
   const institutionName =
     InstitutionList[bookingData.institution] || bookingData.institution;
   const departmentName =
-    DepartmentList[bookingData.department] || bookingData.department;
+  ClubList[bookingData.department] || bookingData.department;
 
   return (
     <>
@@ -242,7 +242,7 @@ const BookingsView = () => {
                   <h1
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-organizing-club">
-                    Organizing Club
+                    Cultural Name
                   </h1>
                   <p
                     className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -436,7 +436,7 @@ const BookingsView = () => {
                   <h1
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 "
                     htmlFor="grid-alt-number">
-                    Department
+                    Club Name
                   </h1>
                   <p
                     className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"

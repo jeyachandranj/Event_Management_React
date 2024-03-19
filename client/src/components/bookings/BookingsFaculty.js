@@ -90,6 +90,12 @@ const BookingFaculty = () => {
   const handleViewClick = (bookingId) => {
     navigate(`/bookingsView/${bookingId}`)
   };
+   
+  const handleEventClick = (bookingId, eventName) => {
+    navigate(`/registrationview/${bookingId}`, { state: { eventName } });
+  };
+
+  
  
 
   return (
@@ -114,7 +120,7 @@ const BookingFaculty = () => {
             Pending
           </button>
           
-        {"false" === "true" &&
+        {"true" === "true" &&
         <div>
           <button
             className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Approved By HOD" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800 hover:bg-gray-100"}`}
@@ -128,7 +134,7 @@ const BookingFaculty = () => {
             className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Rejected By HOD" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800   hover:bg-gray-100"}`}
             onClick={() => handleFilter("Rejected By HOD")}
           >
-            Rejected By Hod
+            Rejected By Club Head
           </button>
           </div>
            }
@@ -166,11 +172,11 @@ const BookingFaculty = () => {
                       Hall Name
                     </th>
                     <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                      Organizing Club
+                      Cultural Name
 
                     </th>
                     <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                      Department
+                      Club Name
                     </th>
                     <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
                       Event Date
@@ -276,7 +282,8 @@ const BookingFaculty = () => {
 
 
                         <td className="px-5 py-5 text-m bg-white  border-gray-200">
-                          <button onClick={() => handleViewClick(booking._id)} className="text-m font-bold ml-5 leading-none text-gray-600 py-3 px-5 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none">View</button>
+                          <button onClick={() => handleViewClick(booking._id)} className="text-m font-bold ml-5 leading-none text-gray-600 py-3 px-5 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none">View Booking</button>
+                          <button onClick={() => handleEventClick(booking._id, booking.eventName)} className="text-m font-bold ml-5 leading-none text-gray-600 py-3 px-5 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none">View Registration</button>
                           {/* <button onClick={() => handleEditClick(booking._id)} */}
                             {/* className="text-m font-bold ml-5 leading-none text-gray-600 py-3 px-5 bg-yellow-200 rounded hover:bg-yellow-300  focus:outline-none">Edit</button> */}
                           {/* <button
