@@ -4,4 +4,3 @@ The project featured a multi-role login system with four types of users: student
 
 Students could register for events and make payments using Razorpay integration. The platform also provided a comprehensive calendar view where users could click on dates to see a list of events scheduled for that day.
 
-Unfortunately, I don't have a link to the project on Github, but I can provide more details or discuss specific aspects if you're interested!
