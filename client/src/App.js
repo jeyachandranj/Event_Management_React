@@ -27,13 +27,13 @@ import HallsEdit from "./components/halls/HallsEdit";
 import HallForm from "./components/halls/HallForm";
 import HodDashboard from "./components/dashboard/HodDashboard";
 import PasswordReset from "./components/auth/PasswordReset";
-
+import CertificateGenerator from "./components/bookings/CertificateGenerator";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import VerifySuccess from "./components/auth/VerifySuccess";
 import Unauthorized from "./components/Unauthorized";
 import BookingUpdateFrom from "./components/bookings/BookingUpdateForm";
 import Events from "./components/bookings/Events";
-
+import answer from "./components/bookings/answer";
 import BookingsView from "./components/bookings/BookingView";
 import RegistrationView from "./components/bookings/RegistrationView";
 import { CalendarView } from "./components/CalendarView";
@@ -161,6 +161,9 @@ const App = () => {
             element={<RegistrationView />}
           />
           <Route exact path="/bookingstudent" element={<BookingStudent />} />
+          <Route exact path="/certificategenerator" element={<CertificateGenerator />} />
+          <Route exact path="/answer" element={<answer />} />
+
         </Routes>
 
         <Footer />

@@ -101,7 +101,7 @@ const BookingFaculty = () => {
   return (
     <>
 
-      <div className="mt-6 min-h-screen">
+      <div className="mt-6 min-h-screen" style={{backgroundColor:"lightgray"}}>
         <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-3xl text-center text-gray-800 font-black leading-7 ml-3 md:leading-10">
           Your<span style={{"color":"#6d7f69"}}> Bookings</span> </h1>
 

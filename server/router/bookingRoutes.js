@@ -17,10 +17,18 @@ router.get('/getStudentRegistration',authenticate, bookingController.getRegistra
 router.get('/bookingsFaculty',authenticate,  bookingController.getBookingByUserId);
 router.post('/bookings',authenticate, bookingController.createBooking);
 router.post('/eventregister',authenticate, bookingController.bookingEvent);
+router.post('/send-email',authenticate, bookingController.sendingEmail);
 router.put('/bookingsEdit/:bookingId',authenticate, bookingController.updateBooking);
 router.put('/eventRegisterEdit/:bookingId',authenticate,bookingController.updateEventRegistration);
 router.put('/eventparticipation/:bookingId',authenticate,bookingController.updateEventRegistrationStatus);
 router.delete('/bookings/:bookingId',authenticate, bookingController.deleteBooking);
+router.delete('/bookings/:hallId',authenticate, bookingController.deleteBookingHall);
+router.post('/api/payment/orders',authenticate, bookingController.apiPayment);
+router.post('/api/payment/verify',authenticate, bookingController.apiPaymentVerify);
+
+
+
+
 
 
 module.exports = router;

@@ -126,18 +126,18 @@ const AllClubs = () => {
       <style>{css}</style> 
       <h1 className="text-3xl font-bold mb-4" style={{"textAlign":"center"}}>All Cultural</h1>
       <div className="grid grid-cols-3 md:grid-cols-3 gap-4 ">
-        {institutions.slice(0, 15).map((institution, index) => (
-          <div key={index} className="border border-gray-200 rounded-md p-4" style={{"width":"1500px"}}>
-            <h2 className="text-xl font-semibold mb-2" style={{"textAlign":"center"}}>{institution.name} Cultural</h2>
-            <div className="grid grid-cols-4 gap-2">
-              {culturalLists.map((Cultural, index) => (
-                <div key={index} className="bg-white p-4 rounded-md shadow-md" style={styles.clubCard}>
-                   <a href="#" onClick={() => navigateToEventPage(Cultural)} className="text-lg font-semibold mb-2" style={styles.rainbowText}>
-                    {Cultural}
-                  </a>
-                </div>
-              ))}
-            </div>
+              {institutions.slice(0, 15).map((institution, index) => (
+                <div key={index} className="border border-gray-200 rounded-md p-4" style={{"width":"1500px"}}>
+                  <h2 className="text-xl font-semibold mb-2" style={{"textAlign":"center"}}>{institution.name} Cultural</h2>
+                  <div className="grid grid-cols-4 gap-2">
+        {Array.from(new Set(culturalLists)).map((Cultural, index) => (
+          <div key={index} className="bg-white p-4 rounded-md shadow-md" style={styles.clubCard}>
+            <a href="#" onClick={() => navigateToEventPage(Cultural)} className="text-lg font-semibold mb-2" style={styles.rainbowText}>
+              {Cultural}
+            </a>
+          </div>
+        ))}
+      </div>
           </div>
         ))}
       </div>

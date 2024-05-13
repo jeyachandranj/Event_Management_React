@@ -46,41 +46,50 @@ export const CalendarView = () => {
   // State for the events fetched from the API
   const [events, setEvents] = useState([]);
 
-  // Fetch events data from the API when the component mounts
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/events`, {
-          // withCredentials: true, // include credentials in the request
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
         });
-
+        console.log("bookingdata response",response);
         setEvents(response.data.bookings);
-        // console.log(response.data.bookings);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
-
-    fetchEvents();
-  }, []);
-
-  useEffect(() => {
+  
     const fetchHallNames = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/halls`);
-        setHallNames(response.data.halls); // Assuming halls are retrieved as an array of objects with 'name' property
+        setHallNames(response.data.halls);
+        console.log("Event",events);
+  console.log("fHallNames",response.data.halls);
+  
+        // Filter events based on fetched halls
+        const filteredEvents = events.filter(event =>
+          response.data.halls.some(fetchedHall =>
+            event.bookingHallId === fetchedHall.id
+          )
+        );
+  
+        // Update events state with filtered events
+        setEvents(filteredEvents);
       } catch (error) {
         console.error("Error fetching hall names:", error);
       }
     };
-
+    console.log("fectEvent",fetchEvents);
+  console.log("fetchHallNames",fetchHallNames);
+  
+    fetchEvents();
     fetchHallNames();
   }, []);
-  // Function to handle hall selection
+  
+
   const handleHallSelection = (hallName) => {
     if (selectedHalls.includes(hallName)) {
       // Deselect hall if already selected

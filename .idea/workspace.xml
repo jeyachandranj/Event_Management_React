@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bd2f5108-9121-4c25-abfc-b1f0e94b437c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Steps.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Steps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/auth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/auth/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/auth/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/bookings/BookingsAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/bookings/BookingsAdmin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/bookings/BookingsFaculty.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/bookings/BookingsFaculty.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/FacultyDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/dashboard/FacultyDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/HodDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/dashboard/HodDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/bookingController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/bookingController.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2djP6uUnifuldtFBgXkcSDJ98yE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Event_Management",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bd2f5108-9121-4c25-abfc-b1f0e94b437c" name="Changes" comment="" />
+      <created>1710518343769</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710518343769</updated>
+      <workItem from="1710518345372" duration="21000" />
+    </task>
+    <servers />
+  </component>
+</project>

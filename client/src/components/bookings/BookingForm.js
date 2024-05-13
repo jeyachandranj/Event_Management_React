@@ -133,6 +133,7 @@ const BookingForm = () => {
       reglimit,
       regamt,
       eventType,
+      upiId,
       eventDescription,
       isApproved,
     } = bookingData;
@@ -162,6 +163,7 @@ const BookingForm = () => {
           reglimit,
           regamt,
           eventType,
+          upiId,
           eventDescription,
           isApproved,
         },
@@ -622,6 +624,7 @@ const BookingForm = () => {
                   />
                 </div>
               </div>
+              <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full md:w-1/2 px-3">
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -641,6 +644,26 @@ const BookingForm = () => {
                   <option value="workshop">Workshop</option>
                 </select>
               </div>
+
+              <div className="w-full md:w-1/2 px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 "
+                    htmlFor="grid-upiId-name"
+                  >
+                    UPI ID
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-upiId-name"
+                    type="text"
+                    value={bookingData.upiId}
+                    name="upiId"
+                    onChange={handleInputs}
+                    placeholder="UPI ID"
+                    
+                  />
+                </div>
+                </div>
 
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">

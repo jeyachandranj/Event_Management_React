@@ -175,14 +175,12 @@ const Signup = () => {
                 >
                   <option value="">Select</option>
                   <option value="student">Student</option>
-
                   <option value="faculty">Club Member</option>
+                  <option value="admin">Admin</option>
                   {"true" === "true" && <option value="hod">Club Head</option>}
 
-                  {"true" === "true" && <option value="admin">Admin</option>}
                 </select>
               </div>
-
               {user.userType === "admin" ? (
                 <>
                   <div className="relative mb-4">
@@ -190,7 +188,7 @@ const Signup = () => {
                       htmlFor="adminKey"
                       className="leading-7 block uppercase tracking-wide text-gray-700 text-xs font-bold"
                     >
-                      Admin Key
+                       Admin Key
                     </label>
                     <input
                       type="text"
@@ -199,7 +197,7 @@ const Signup = () => {
                       onChange={handleInputs}
                       id="adminKey"
                       name="adminKey"
-                      placeholder="Admin Key"
+                      placeholder="adminKey"
                       className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
                   </div>

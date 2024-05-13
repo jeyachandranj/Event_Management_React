@@ -4,6 +4,7 @@ import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CSVLink } from "react-csv";
 const RegistrationView = () => {
   const [eventRegistrationData, setEventRegistrationData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -113,6 +114,38 @@ const RegistrationView = () => {
   };
  console.log("eventRegistrationData",eventRegistrationData);
 
+ const convertToCSV = () => {
+  if (Array.isArray(eventRegistrationData)) {
+    return eventRegistrationData.map((booking) => ({
+      "Student Name": booking.name,
+      "Phone Number": booking.phone,
+      Email: booking.email,
+      Department: booking.department,
+      "Roll No": booking.rollno,
+      "Registration Amount": booking.regamt,
+      "Payment Date": new Date(booking.createdAt).toLocaleDateString(),
+      "Payment status": booking.status,
+      "Participation status": booking.Participationstatus,
+    }));
+  } else if (typeof eventRegistrationData === 'object' && eventRegistrationData !== null) {
+    // Handle object case
+    return [{
+      "Student Name": eventRegistrationData.name,
+      "Phone Number": eventRegistrationData.phone,
+      Email: eventRegistrationData.email,
+      Department: eventRegistrationData.department,
+      "Roll No": eventRegistrationData.rollno,
+      "Registration Amount": eventRegistrationData.regamt,
+      "Payment Date": new Date(eventRegistrationData.createdAt).toLocaleDateString(),
+      "Payment status": eventRegistrationData.status,
+      "Participation status": eventRegistrationData.Participationstatus,
+    }];
+  } else {
+    return []; // Return empty array if data is not in expected format
+  }
+};
+
+
 
   return (
     <>
@@ -120,6 +153,15 @@ const RegistrationView = () => {
         <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-3xl text-center text-gray-800 font-black leading-7 ml-3 md:leading-10">
          {eventName} Event<span style={{ color: "#6d7f69" }}> Registration Details</span>{" "}
         </h1>
+        <CSVLink
+            data={convertToCSV()}
+            filename={"event_registration_data.csv"}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 ml-auto mr-4 inline-flex items-center"
+            style={{"marginLeft":"1450px","backgroundColor":"#6d7f69"}}
+            target="_blank"
+          >
+            Download CSV
+          </CSVLink>
 
         {/* 
           <div className="flex flex-wrap my-8 justify-center">

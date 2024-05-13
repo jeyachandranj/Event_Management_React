@@ -84,6 +84,9 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    upiId: {
+      type: String,
+    },
     eventDescription: {
       type: String,
       required: true

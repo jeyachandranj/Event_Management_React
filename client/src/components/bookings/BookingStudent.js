@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner";
-import { toast } from "react-toastify";
+import { saveAs } from "file-saver"; 
+import { PDFDocument, rgb } from 'pdf-lib';
+
+
 const BookingStudent = () => {
     console.log("welcome");
   const [eventRegistrationData, setEventRegistrationData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { bookingId } = useParams();
 
   const getEventRegistrationData = async () => {
     try {
@@ -38,136 +39,102 @@ const BookingStudent = () => {
   useEffect(() => {
     getEventRegistrationData();
   }, []);
+  console.log("getEventRegistrationData",eventRegistrationData);
+
+  const capitalize = (str, lower = false) => {
+    if (typeof str !== 'string') return ''; // Ensure `str` is a string
+  
+    return (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) =>
+      match.toUpperCase()
+    );
+  };
+
+  const generatePDF = async (name,booking) => {
+    console.log("booking",booking);
+    try {
+      const existingPdfBytes = await fetch('./cert.pdf').then((res) =>
+        res.arrayBuffer()
+      );
+
+      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+      const pages = pdfDoc.getPages();
+      const firstPage = pages[0];
+
+      firstPage.drawText(name, {
+        x: 200,
+        y: 300,
+        size: 28,
+        color: rgb(0.2, 0.84, 0.67),
+      });
+
+      firstPage.drawText(booking.eventName, {
+        x: 450,
+        y: 267,
+        size: 28,
+        color: rgb(0.2, 0.84, 0.67),
+      });
+
+      
+
+      firstPage.drawText("I'HALTONS", {
+        x: 190,
+        y: 230,
+        size: 25,
+        color: rgb(0.2, 0.84, 0.67),
+      });
+      const dateParts = booking.createdAt.split('T');
+      const date = dateParts[0];
+      console.log("date",date);
+      firstPage.drawText(date, {
+        x: 550,
+        y: 200,
+        size: 20,
+        color: rgb(0.2, 0.84, 0.67),
+      });
+
+      const pdfBytes = await pdfDoc.save();
+
+      const file = new File([pdfBytes], 'Certificate.pdf', {
+        type: 'application/pdf;charset=utf-8',
+      });
+
+      saveAs(file);
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('studentEmail', booking.email); // Assuming student's email is available in the booking object
+      formData.append('memberEmail', 'j.jeyachandran072@gmail.com'); // Replace with the member's email address
+      formData.append('file', file);
+  
+      await axios.post('http://localhost:4000/send-email', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('Error generating certificate:', error);
+      console.error('Error generating or sending email:', error);
+    }
+  };
 
   
-
-  const updateBooking = async (bookingId, isApproved) => {
-    setIsLoading(true);
-
-    try {
-      const response = await axios.put(`http://localhost:4000/eventRegisterEdit/${bookingId}`, {
-        status: isApproved,
-      }, {
-        withCredentials: true, // include credentials in the request
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
-      });
-      getEventRegistrationData();
-      
-      // const data = response.data;
-      //consolelog(data);
-
-
-      // setBookingData(data.bookings);
+  const handleGenerateCertificate = (booking) => {
+    const val = capitalize(booking.name);
     
-      // setIsLoading(false);
-      toast.success(`Request ${isApproved} Successfull!`)
-
-      if (response.status !== 200) {
-
-        throw new Error(response.error);
-      }
-    } catch (error) {
-
-      //consolelog(error);
-      // navigate("/login");
+    if (val.trim() !== '') {
+      generatePDF(val,booking);
+    } else {
+      // Handle invalid input
     }
   };
-
-  const ParticipationUpdate = async (bookingId, isApproved) => {
-    setIsLoading(true);
-
-    try {
-      const response = await axios.put(`http://localhost:4000/eventparticipation/${bookingId}`, {
-        Participationstatus: isApproved
-      }, {
-        withCredentials: true, // include credentials in the request
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
-      });
-      getEventRegistrationData();
-      
-      // const data = response.data;
-      //consolelog(data);
-
-
-      // setBookingData(data.bookings);
-    
-      // setIsLoading(false);
-      toast.success(`Request ${isApproved} Successfull!`)
-
-      if (response.status !== 200) {
-
-        throw new Error(response.error);
-      }
-    } catch (error) {
-
-      //consolelog(error);
-      // navigate("/login");
-    }
-  };
-
- console.log("eventRegistrationData",eventRegistrationData);
-
-
-
+ 
   return (
     <>
-      <div className="mt-6 min-h-screen">
+      <div className="mt-6 min-h-screen" style={{backgroundColor:"lightgray"}}>
         <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-3xl text-center text-gray-800 font-black leading-7 ml-3 md:leading-10">
           Event<span style={{ color: "#6d7f69" }}> Registration Details</span>{" "}
         </h1>
-
-        {/* 
-          <div className="flex flex-wrap my-8 justify-center">
-          <button
-            className={`rounded-full px-4 py-2 mx-4  focus:outline-none ${filterValue === "all" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800 hover:bg-gray-100"}`}
-            onClick={() => handleFilter("all")}
-          >
-            All
-          </button>
-          <button
-            className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Request Sent" ? "bg-indigo-100 text-indigo-800 " : "bg-white text-gray-800 hover:bg-gray-100"}`}
-            onClick={() => handleFilter("Request Sent")}
-          >
-            Pending
-          </button>
-          
-        {"true" === "true" &&
-        <div>
-          <button
-            className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Approved By HOD" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800 hover:bg-gray-100"}`}
-            onClick={() => handleFilter("Approved By HOD")}
-          >
-            Forwarded To Admin
-          </button>
-            
-
-          <button
-            className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Rejected By HOD" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800   hover:bg-gray-100"}`}
-            onClick={() => handleFilter("Rejected By HOD")}
-          >
-            Rejected By Club Head
-          </button>
-          </div>
-           }
-          <button
-            className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Approved By Admin" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800 hover:bg-gray-100"}`}
-            onClick={() => handleFilter("Approved By Admin")}
-          >
-            Approved By Admin
-          </button>
-          <button
-            className={`rounded-full px-4 py-2 mx-4 focus:outline-none ${filterValue === "Rejected By Admin" ? "bg-indigo-100 text-indigo-800" : "bg-white text-gray-800   hover:bg-gray-100"}`}
-            onClick={() => handleFilter("Rejected By Admin")}
-          >
-            Rejected By Admin
-          </button>
-        </div> */}
 
         {isLoading ? (
           <LoadingSpinner />
@@ -210,16 +177,7 @@ const BookingStudent = () => {
                       >
                        Participation status
                       </th>
-                      
-                      {/* <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                      Event Date
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                      Status
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-l   text-gray-800 uppercase   border-gray-200">
-                      Actions
-                    </th> */}
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -259,26 +217,12 @@ const BookingStudent = () => {
                               {booking.Participationstatus}
                             </p>
                           </td>
+                          <td>
+                            <button onClick={() => handleGenerateCertificate(booking)}>Get Certificate</button>
+                           </td>
                           
-                          {/* <td className="px-5 py-5 text-m bg-white  border-gray-200">
-
-                         {booking.eventDateType === "multiple" ? 
-                          <p className="text-gray-900 whitespace-no-wrap ">
-                            {format(new Date(booking.eventStartDate), "EEEE dd-MM-yyyy")}
-                            <br/>To<br/>
-                            {format(new Date(booking.eventEndDate), "EEEE dd-MM-yyyy")}
-
-                          </p>
-
-                          :
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {format(new Date(booking.eventDate), "EEEE dd-MM-yyyy")}
-                          </p>
-
-                          }
-                         </td> */}
+                          
                         </tr>
-                        // </div>
                       ))
                     ) : (
                       <tr className="border-gray-200 border-b justify-center">

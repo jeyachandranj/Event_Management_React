@@ -77,6 +77,34 @@ const HallsAdmin = () => {
 
   const handleDeleteClick = async (hallId) => {
     // e.preventDefault();
+    try {
+          const response = await axios.delete(`http://localhost:4000/bookings/${hallId}`,
+            {
+              withCredentials: true,
+              headers: {
+                // Accept: "application/json",
+                "Content-Type": "application/json"
+              },
+            }
+          );
+          const data = response.data;
+          if (data) {
+            navigate("/")
+            toast.success("Booking Deleted Successfull!")
+          } else {
+            toast.error("Request not send!")
+            // setShowModal(false);
+            // setSelectedBookingId("");
+          }
+        } catch (error) {
+          if (error.response.status === 404 && error.response) {
+            const data = error.response.data;
+            //consolelog(data.error);
+          } else {
+            navigate("/")
+            //consoleerror(error);
+          }
+        }
 
     try {
       const response = await axios.delete(
@@ -155,11 +183,14 @@ const HallsAdmin = () => {
                 Available <span style={{ color: "#6d7f69" }}> Halls</span>{" "}
               </h1>
             </div>
-            <Link to='/hallForm'>
-              <button className='flex self-end focus:outline-none lg:text-lg lg:font-bold focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700  md:block bg-transparent transition duration-150 ease-in-out hover:bg-gray-200 rounded border border-indigo-700 text-indigo-700  sm:px-8 py-1 sm:py-3 text-sm'>
-                Create Hall
-              </button>
-            </Link>
+            {hallData.length < 1 && (
+              <Link to='/hallForm'>
+                <button className='flex self-end focus:outline-none lg:text-lg lg:font-bold focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700  md:block bg-transparent transition duration-150 ease-in-out hover:bg-gray-200 rounded border border-indigo-700 text-indigo-700  sm:px-8 py-1 sm:py-3 text-sm'>
+                  Create Hall
+                </button>
+              </Link>
+            )}
+
           </div>
 
           {Array.isArray(hallData) && hallData.length > 0 ? (

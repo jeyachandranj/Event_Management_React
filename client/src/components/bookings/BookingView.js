@@ -196,7 +196,7 @@ const BookingsView = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading  ? (
         <LoadingSpinner />
       ) : (
         <div>

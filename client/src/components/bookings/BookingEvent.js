@@ -1,19 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../LoadingSpinner";
 import axios from "axios";
 import QRCode from "qrcode.react";
-import { UserContext } from "../../App";
+import "./App1.css"
 
-import {
-  RequestSent,
-  ApprovedByAdmin,
-  ApprovedByHod,
-  RejectedByAdmin,
-  RejectedByHod,
-} from "../Steps";
 import { ClubList, InstitutionList } from "../Institutions";
 const BookingEvent = () => {
   const navigate = useNavigate();
@@ -23,12 +16,7 @@ const BookingEvent = () => {
   const [bookingData, setBookingData] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
-  const [amtVerified,SetAmtVerified] = useState(false);
-  const { state } = useContext(UserContext);
-
-  const openModal = (bookingId) => {
-    setShowModal(true);
-  };
+  
   const closeModal = () => {
     setShowModal(false);
     setRejectionReason("");
@@ -129,57 +117,18 @@ const BookingEvent = () => {
     }
   };
 
-  // const deleteBooking = async (bookingId) => {
-  //   try {
-  //     const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/bookings/${bookingId}`,
-  //       {
-  //         withCredentials: true,
-  //         headers: {
-  //           // Accept: "application/json",
-  //           "Content-Type": "application/json"
-  //         },
-  //       }
-  //     );
-  //     const data = response.data;
-  //     if (data) {
-  //       navigate("/")
-  //       toast.success("Booking Deleted Successfull!")
-  //     } else {
-  //       toast.error("Request not send!")
-  //       // setShowModal(false);
-  //       // setSelectedBookingId("");
-  //     }
-  //   } catch (error) {
-  //     if (error.response.status === 404 && error.response) {
-  //       const data = error.response.data;
-  //       //consolelog(data.error);
-  //     } else {
-  //       navigate("/")
-  //       //consoleerror(error);
-  //     }
-  //   }
-  // };
-
-  const handleEditClick = (bookingId) => {
-    navigate(`/bookingsEdit/${bookingId}`);
-  };
 
   const handleTransactionIdChange = (e) => {
     setUserData({ ...userData, transactionId: e.target.value });
   };
 
+  const UPIID = bookingData.upiId;
+
   const generateUpiPaymentUrl = () => {
-    return `upi://pay?pa=j.jeyachandran072@okicici&pn=Recipient&tn=Payment%20for%20your%20order&am=${bookingData.regamt}&cu=INR`;
+    return `upi://pay?pa=${UPIID}&pn=Recipient&tn=Payment%20for%20your%20order&am=${bookingData.regamt}&cu=INR`;
     // Replace '100' with the actual amount
   };
 
-  // const handleDeleteModal = (bookingId) => {
-  //   setSelectedBookingId(bookingId);
-  //   setShowModal(true);
-  // };
-  // const handleDeleteBooking = () => {
-  //   deleteBooking(selectedBookingId);
-  // };
   console.log("userdata", userData);
 
   useEffect(() => {
@@ -192,7 +141,6 @@ const BookingEvent = () => {
     e.preventDefault();
     // setShowModal(false)
     setIsLoading(true);
-    SetAmtVerified(true);
     const { name, email, department, institution, phone, transactionId ,rollno} =
       userData;
     const {eventName,regamt} = bookingData;
@@ -228,7 +176,7 @@ const BookingEvent = () => {
           },
         }
       );
-
+        
       const data = response.data;
 
       if (data.message === "EventRegister  successfully") {
@@ -307,6 +255,51 @@ const BookingEvent = () => {
           departmentName = ClubList[bookingData.department] || bookingData.department;
       }
     }
+    const price = bookingData.regamt;
+console.log("price", price);
+
+const [book, setBook] = useState({
+  name: "Event Payment",
+  img: "https://payu.in/blog/wp-content/uploads/2022/09/online-payments.png",
+  price: 100, 
+});
+  
+    const initPayment = (data) => {
+      const options = {
+        key: "rzp_test_glNCOpCuIgvwcY",
+        amount: data.amount,
+        currency: data.currency,
+        name: book.name,
+        description: "Test Transaction",
+        image: book.img,
+        order_id: data.id,
+        handler: async (response) => {
+          try {
+            const verifyUrl = "http://localhost:4000/api/payment/verify";
+            const { data } = await axios.post(verifyUrl, response);
+            console.log(data);
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    };
+  
+    const handlePayment = async () => {
+      try {
+        const orderUrl = "http://localhost:4000/api/payment/orders";
+        const { data } = await axios.post(orderUrl, { amount: book.price });
+        console.log(data);
+        initPayment(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <>
@@ -432,9 +425,9 @@ const BookingEvent = () => {
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-transaction-id"
-                    type="text" // Set input type to text
-                    value={userData.transactionId} // Bind input value to userData state
-                    onChange={handleTransactionIdChange} // Handle input change
+                    type="text" 
+                    value={userData.transactionId} 
+                    onChange={handleTransactionIdChange}
                     placeholder="Enter Transaction ID"
                   />
                   {/* Optionally, you can include validation error messages here */}
@@ -482,7 +475,24 @@ const BookingEvent = () => {
                     <QRCode value={generateUpiPaymentUrl()} />
                   </div>
                 </div>
+                
               </div>
+              <div style={{"marginLeft":"400px"}}>
+                  <h1>(OR)</h1>
+                </div>
+                    <div className="App">
+            <div className="book_container">
+              <img src={book.img} alt="book_img" className="book_img" />
+              <p className="book_name">{book.name}</p>
+              <p className="book_author">By {book.author}</p>
+              <p className="book_price">
+                Price : <span>&#x20B9; {book.price}</span>
+              </p>
+              <button onClick={handlePayment} className="buy_btn">
+                Pay Now
+              </button>
+            </div>
+          </div>
               <div>
                 <button
                   style={{
@@ -540,32 +550,7 @@ const BookingEvent = () => {
           </div>
         </div>
       )}
-      {/* {showModal && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg px-8 py-6">
-            <h2 className="text-lg font-bold mb-4">
-              Are you sure you want to delete ?
-            </h2>
-            <div className="flex justify-end">
-              <button
-                className="mr-2 px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-lg focus:outline-none"
-                onClick={() =>
-                  deleteBooking(selectedBookingId)
-                }
-                // onClick={handleDeleteBooking}
-              >
-                Delete
-              </button>
-              <button
-                className="px-4 py-2 text-white bg-gray-500 hover:bg-gray-600 rounded-lg focus:outline-none"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )} */}
+      
     </>
   );
 };

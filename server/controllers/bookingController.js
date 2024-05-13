@@ -3,7 +3,8 @@ const Hall = require('../model/hallSchema');
 const User = require('../model/userSchema');
 const EventRegister = require('../model/eventregisterSchema');
 const nodemailer = require("nodemailer");
-
+const Razorpay = require('razorpay');
+const crypto = require("crypto");
 
 
 
@@ -134,6 +135,7 @@ const createBooking = async (req, res, next) => {
       reglimit,
       regamt,
       eventType,
+      upiId,
       eventDescription,
       isApproved
     } = req.body;
@@ -232,6 +234,7 @@ const createBooking = async (req, res, next) => {
       reglimit,
       regamt,
       eventType,
+      upiId,
       eventDescription,
       isApproved
     });
@@ -345,6 +348,38 @@ const bookingEvent = async (req, res, next) => {
 };
 
 
+const sendingEmail = async (req, res) => {
+  const { name, studentEmail, file } = req.body;
+
+  try {
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'j.jeyachandran072@gmail.com', 
+        pass: 'jj.jeyan' // sender's password
+      }
+    });
+
+    let info = await transporter.sendMail({
+      from: 'j.jeyachandran072@gmail.com', 
+      to: studentEmail, 
+      subject: 'Certificate', 
+      text: `Hi ${name},\n\nPlease find attached your certificate.\n\nRegards,\nYour Name`, // plain text body
+      attachments: [
+        {
+          filename: 'Certificate.pdf',
+          content: file,
+          encoding: 'base64'
+        }
+      ]
+    });
+    console.log('Email sent: %s', info.messageId);
+    res.status(200).json({ message: 'Email sent successfully!' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send email. Please try again later.' });
+  }
+};
 
 
 
@@ -821,4 +856,66 @@ const deleteBooking = async (req, res, next) => {
   }
 };
 
-module.exports = { createBooking, getBookings, getBookingById, updateBooking, deleteBooking, getBookingByUserId, getEvents,getBookingAdmin ,getBookingHod,bookingEvent,getRegistrationById,updateEventRegistration,updateEventRegistrationStatus,getRegistrationByStudent};
+const deleteBookingHall = async (req, res, next) => {
+  try {
+    const { bookedHallId } = req.params;
+    console.log("bookedhallid",bookedHallId);
+    const booking = await Booking.findByIdAndDelete(bookedHallId);
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+    res.json({ message: 'Booking deleted successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const apiPaymentVerify = async (req, res) => {
+  try {
+		const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+			req.body;
+		const sign = razorpay_order_id + "|" + razorpay_payment_id;
+		const expectedSign = crypto
+			.createHmac("sha256", "DVeY0aj5zs59uDw5aqPFwH4x")
+			.update(sign.toString())
+			.digest("hex");
+
+		if (razorpay_signature === expectedSign) {
+			return res.status(200).json({ message: "Payment verified successfully" });
+		} else {
+			return res.status(400).json({ message: "Invalid signature sent!" });
+		}
+	} catch (error) {
+		res.status(500).json({ message: "Internal Server Error!" });
+		console.log(error);
+	}
+};
+
+const apiPayment = async (req, res) => {
+  try {
+		const instance = new Razorpay({
+			key_id: "rzp_test_glNCOpCuIgvwcY",
+			key_secret: "DVeY0aj5zs59uDw5aqPFwH4x",
+		});
+
+		const options = {
+			amount: req.body.amount * 100,
+			currency: "INR",
+			receipt: crypto.randomBytes(10).toString("hex"),
+		};
+
+		instance.orders.create(options, (error, order) => {
+			if (error) {
+				console.log(error);
+				return res.status(500).json({ message: "Something Went Wrong!" });
+			}
+			res.status(200).json({ data: order });
+		});
+	} catch (error) {
+		res.status(500).json({ message: "Internal Server Error!" });
+		console.log(error);
+	}
+};
+
+
+module.exports = { deleteBookingHall,createBooking, getBookings, getBookingById, updateBooking, deleteBooking, getBookingByUserId, getEvents,getBookingAdmin ,getBookingHod,bookingEvent,getRegistrationById,updateEventRegistration,updateEventRegistrationStatus,getRegistrationByStudent,sendingEmail,apiPayment,apiPaymentVerify};

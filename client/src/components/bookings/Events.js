@@ -2,23 +2,35 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner";
 import { format, parseISO } from "date-fns";
+import {  differenceInMilliseconds } from "date-fns";
 import { ClubList } from "../Institutions";
 import "../../hallbook.css";
 import Popup from "./popup"
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import CertificateGeneration from "./CertificateGenerator";
 
 const Events = () => {
   // const navigate = useNavigate();
   const [eventData, setEventData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [eventTypeFilter, setEventTypeFilter] = useState("all");
+  const [showCertificate, setShowCertificate] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowCertificate(true);
+  };
 
   const navigate = useNavigate();
 
 
   const handleViewClick = (bookingId) => {
     navigate(`/bookingevent/${bookingId}`);
+  };
+
+  const handleNavigate = () => {
+    // Navigate to the desired page passing eventData as a parameter
+    navigate('/certificategenerator', { state: { eventData } });
   };
 
   const location = useLocation();
@@ -59,7 +71,27 @@ const Events = () => {
 
   useEffect(() => {
     getEventData();
+    const intervalId = setInterval(() => {
+      setEventData((prevEventData) => prevEventData.map(event => ({...event, countdown: calculateCountdown(event.eventDate)})));
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId); // Clear interval on component unmount
+    };
   }, []);
+
+  const calculateCountdown = (eventDate) => {
+    const currentDate = new Date();
+    const timeDifference = differenceInMilliseconds(new Date(eventDate), currentDate);
+    if (timeDifference <= 0) {
+      return "Event has passed";
+    }
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
 
   const filteredEventData = eventData.filter((event) => {
     const eventDate = new Date(event.eventDate);
@@ -142,6 +174,11 @@ const Events = () => {
           >
             Workshop
           </button>
+          <button onClick={handleButtonClick}>VOICE</button>
+      {showCertificate && <CertificateGeneration eventData={eventData} />}
+
+      {/* Display the navigation button */}
+      <button onClick={handleNavigate}>Show Event Rules</button>
         </div>
         <br></br>
         <br></br>
@@ -149,6 +186,7 @@ const Events = () => {
           Upcomming<span style={{ color: "#6d7f69" }}> Events </span> for{" "}
           {CulturalName}
         </h1>
+      
         {isLoading ? (
           <LoadingSpinner />
         ) : filteredEventData.length ? (
@@ -214,6 +252,25 @@ const Events = () => {
                           </p>
                         </div>
 
+                        <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+  <p style={{
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    color: '#666'
+  }}>Time Remaining</p>
+  <p style={{
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    animation: 'colorChange 1s infinite alternate', /* Add animation */
+    /* You can set initial color here, for example */
+    color: event.color || '#333', /* If event.color is not defined, fallback to #333 */
+  }}>
+    {event.countdown}
+  </p>
+</div>
+
+
                         {(event.eventDateType === "full" ||
                           event.eventDateType === "half") && (
                           <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
@@ -225,8 +282,13 @@ const Events = () => {
                                 new Date(event.eventDate),
                                 "EEEE dd-MM-yyyy"
                               )}
-                            </p>
+                            </p> 
+  
+
                           </div>
+
+                          
+
                         )}
 
                         {event.eventDateType === "half" && (
@@ -281,6 +343,7 @@ const Events = () => {
                                   "EEEE dd-MM-yyyy"
                                 )}
                               </p>
+
                             </div>
                           </>
                         )}
