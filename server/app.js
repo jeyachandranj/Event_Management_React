@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors")
 // const connectDB = require("./DB/conn");
 const cookieParser = require("cookie-parser");
@@ -16,7 +15,6 @@ app.set("trust proxy",1);
 
 app.use(express.json());
 
-dotenv.config({path:"./.env"})
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Credentials', true);
