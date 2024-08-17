@@ -42,7 +42,7 @@ const Events = () => {
 
   const getEventData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/events`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/events`, {
         // withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",

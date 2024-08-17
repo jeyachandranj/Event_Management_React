@@ -50,7 +50,7 @@ const Signup = () => {
 
     try {
       await axios.post(
-        `http://localhost:4000/register`,
+        `https://event-management-react-1.onrender.com/register`,
         {
           name,
           email,

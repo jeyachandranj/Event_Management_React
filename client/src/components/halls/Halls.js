@@ -14,7 +14,7 @@ const Halls = () => {
   const getHallsData = async () => {
     
     try {
-      const response = await axios.get(`http://localhost:4000/halls`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/halls`, {
         withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",

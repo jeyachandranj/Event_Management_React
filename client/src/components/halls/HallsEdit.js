@@ -19,7 +19,7 @@ const HallsEdit = () => {
 
   const getHallsData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/halls/${hallId}`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/halls/${hallId}`, {
         withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",
@@ -62,7 +62,7 @@ const HallsEdit = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:4000/halls/${hallId}`,
+        `https://event-management-react-1.onrender.com/halls/${hallId}`,
         {
           name,location,capacity,amenities,description 
         },

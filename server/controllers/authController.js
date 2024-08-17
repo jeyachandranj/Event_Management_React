@@ -448,7 +448,7 @@ const emailVerificationLink = async (req, res,next) => {
             //send mail to admin to verify new user
             to:"jeyachandranj.22aim@kongu.edu",
             subject:"Book It User Verification",
-            html:verifyEmailTemplate((`http://localhost:4000/verifyEmail/${userFind.id}/${setUserToken.verifyToken}`),userFind) 
+            html:verifyEmailTemplate((`https://event-management-react-1.onrender.com/verifyEmail/${userFind.id}/${setUserToken.verifyToken}`),userFind) 
             // text:`This link is valid for 5 minutes \n ${process.env.CLIENT_URL}/forgotPassword/${userFind.id}/${setUserToken.verifyToken} \n click on above link`
           }
         }

@@ -17,7 +17,7 @@ const HallsAdmin = () => {
 
   const callAboutPage = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/about`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/about`, {
         withCredentials: true,
         headers: {
           Accept: "application/json",
@@ -48,7 +48,7 @@ const HallsAdmin = () => {
 
   const getHallsData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/halls`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/halls`, {
         withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",
@@ -78,7 +78,7 @@ const HallsAdmin = () => {
   const handleDeleteClick = async (hallId) => {
     // e.preventDefault();
     try {
-          const response = await axios.delete(`http://localhost:4000/bookings/${hallId}`,
+          const response = await axios.delete(`https://event-management-react-1.onrender.com/bookings/${hallId}`,
             {
               withCredentials: true,
               headers: {
@@ -108,7 +108,7 @@ const HallsAdmin = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/halls/${hallId}`,
+        `https://event-management-react-1.onrender.com/halls/${hallId}`,
 
         {
           withCredentials: true, // To include credentials in the request

@@ -16,7 +16,7 @@ const BookingFaculty = () => {
 
   const getBookingData = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:4000/bookingsFaculty`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/bookingsFaculty`, {
         withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",

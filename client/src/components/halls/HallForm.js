@@ -22,7 +22,7 @@ const HallForm = () => {
 
   const userContact = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/getdata`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/getdata`, {
         withCredentials: true, // include credentials in the request
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const HallForm = () => {
     // setIsLoading(true)
     try {
       const response = await axios.post(
-        `http://localhost:4000/halls`,
+        `https://event-management-react-1.onrender.com/halls`,
         {
           name,location,capacity,amenities,description ,hallCreater
         },

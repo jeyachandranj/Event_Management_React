@@ -17,7 +17,7 @@ const BookingsHod = () => {
 
   const userContact = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/getdata`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/getdata`, {
         withCredentials: true, // include credentials in the request
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const BookingsHod = () => {
   }, []);
   const getBookingData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/bookingsHod`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/bookingsHod`, {
         withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",
@@ -123,7 +123,7 @@ const BookingsHod = () => {
 
     //consolelog(isApproved);
     try {
-      const response = await axios.put(`http://localhost:4000/bookingsEdit/${bookingId}`, {
+      const response = await axios.put(`https://event-management-react-1.onrender.com/bookingsEdit/${bookingId}`, {
         isApproved: isApproved
       }, {
         withCredentials: true, // include credentials in the request

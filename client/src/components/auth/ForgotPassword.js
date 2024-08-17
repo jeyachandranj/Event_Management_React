@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     try {
     // const response = await axios.post("http://localhost:9002/login", {
     // eslint-disable-next-line no-unused-vars
-    const response = await axios.get(`http://localhost:4000/forgotPassword/${id}/${token}`, {
+    const response = await axios.get(`https://event-management-react-1.onrender.com/forgotPassword/${id}/${token}`, {
       // withCredentials: true, // To include credentials in the request
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +78,7 @@ setIsLoading(true)
 
     try {
       // const response = await axios.post("http://localhost:9002/login", {
-      const response = await axios.post(`http://localhost:4000/${id}/${token}`, {
+      const response = await axios.post(`https://event-management-react-1.onrender.com/${id}/${token}`, {
         password,cpassword
       }, {
         headers: {

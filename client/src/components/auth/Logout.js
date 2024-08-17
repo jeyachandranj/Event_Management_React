@@ -15,7 +15,7 @@ const userId = localStorage.getItem("userId")
 
     const logoutUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/logout/${userId}`, {
+        const res = await axios.get(`https://event-management-react-1.onrender.com/logout/${userId}`, {
           // userId,
           withCredentials: true, // include credentials in the request
           headers: {

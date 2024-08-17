@@ -25,7 +25,7 @@ const BookingEvent = () => {
   const getbookingById = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/bookingsView/${bookingId}`,
+        `https://event-management-react-1.onrender.com/bookingsView/${bookingId}`,
         {
           withCredentials: true,
           headers: {
@@ -47,7 +47,7 @@ const BookingEvent = () => {
 
   const callAboutPage = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/about`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/about`, {
         withCredentials: true,
         headers: {
           Accept: "application/json",
@@ -89,7 +89,7 @@ const BookingEvent = () => {
     //consolelog(isApproved);
     try {
       const response = await axios.put(
-        `http://localhost:4000/bookingsEdit/${bookingId}`,
+        `https://event-management-react-1.onrender.com/bookingsEdit/${bookingId}`,
         {
           isApproved: isApproved,
           rejectionReason:
@@ -152,7 +152,7 @@ const BookingEvent = () => {
     console.log("bookinghallid",bookingId);
     try {
       const response = await axios.post(
-        `http://localhost:4000/eventregister`,
+        `https://event-management-react-1.onrender.com/eventregister`,
         {
           name,
           email,
@@ -275,7 +275,7 @@ const [book, setBook] = useState({
         order_id: data.id,
         handler: async (response) => {
           try {
-            const verifyUrl = "http://localhost:4000/api/payment/verify";
+            const verifyUrl = "https://event-management-react-1.onrender.com/api/payment/verify";
             const { data } = await axios.post(verifyUrl, response);
             console.log(data);
           } catch (error) {
@@ -292,7 +292,7 @@ const [book, setBook] = useState({
   
     const handlePayment = async () => {
       try {
-        const orderUrl = "http://localhost:4000/api/payment/orders";
+        const orderUrl = "https://event-management-react-1.onrender.com/api/payment/orders";
         const { data } = await axios.post(orderUrl, { amount: book.price });
         console.log(data);
         initPayment(data.data);

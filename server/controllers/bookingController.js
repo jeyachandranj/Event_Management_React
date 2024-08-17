@@ -95,7 +95,7 @@ const generateBookingEmailTemplate = (eventName, bookedHallName, organizingClub,
                 </div>
               </div>
               
-              <a href="http://localhost:4000/bookingsView/${bookingId}" style="background-color: #4f46e5; color: #fff; padding: 8px 24px; border-radius: 8px; border-style: solid; border-color: #4f46e5; font-size: 14px; text-decoration: none; cursor: pointer">View Booking</a>
+              <a href="https://event-management-react-1.onrender.com/bookingsView/${bookingId}" style="background-color: #4f46e5; color: #fff; padding: 8px 24px; border-radius: 8px; border-style: solid; border-color: #4f46e5; font-size: 14px; text-decoration: none; cursor: pointer">View Booking</a>
             </td>
           </tr>
         </table>
@@ -731,7 +731,7 @@ const updateEventRegistrationStatus = async (req, res, next) => {
                   </div>
                   </div>
                   
-                  <a href="http://localhost:4000/bookingsView/${bookingId}"  style="background-color: #4f46e5; color: #fff; padding: 8px 24px; border-radius: 8px; border-style: solid; border-color: #4f46e5; font-size: 14px; text-decoration: none; cursor: pointer">View Booking</a>
+                  <a href="https://event-management-react-1.onrender.com/bookingsView/${bookingId}"  style="background-color: #4f46e5; color: #fff; padding: 8px 24px; border-radius: 8px; border-style: solid; border-color: #4f46e5; font-size: 14px; text-decoration: none; cursor: pointer">View Booking</a>
                 </td>
               </tr>
             </table>
@@ -828,7 +828,7 @@ const updateEventRegistrationStatus = async (req, res, next) => {
                   </div>
                   </div>
                   
-                  <a href="http:localhost:4000/bookingsView/${bookingId}"  style="background-color: #4f46e5; color: #fff; padding: 8px 24px; border-radius: 8px; border-style: solid; border-color: #4f46e5; font-size: 14px; text-decoration: none; cursor: pointer">View Booking</a>
+                  <a href="https://event-management-react-1.onrender.com/bookingsView/${bookingId}"  style="background-color: #4f46e5; color: #fff; padding: 8px 24px; border-radius: 8px; border-style: solid; border-color: #4f46e5; font-size: 14px; text-decoration: none; cursor: pointer">View Booking</a>
                 </td>
               </tr>
             </table>

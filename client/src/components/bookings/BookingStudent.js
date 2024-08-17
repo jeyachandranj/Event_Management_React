@@ -13,7 +13,7 @@ const BookingStudent = () => {
   const getEventRegistrationData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/getStudentRegistration`,
+        `https://event-management-react-1.onrender.com/getStudentRegistration`,
         {
           withCredentials: true, // include credentials in the request
           headers: {
@@ -106,7 +106,7 @@ const BookingStudent = () => {
       formData.append('memberEmail', 'j.jeyachandran072@gmail.com'); // Replace with the member's email address
       formData.append('file', file);
   
-      await axios.post('http://localhost:4000/send-email', formData, {
+      await axios.post('https://event-management-react-1.onrender.com/send-email', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

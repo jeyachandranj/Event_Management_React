@@ -62,7 +62,7 @@ const BookingsAdmin = () => {
   // };
   const userContact = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/getdata`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/getdata`, {
         withCredentials: true, // include credentials in the request
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ const BookingsAdmin = () => {
 
   const getBookingData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/bookingsAdmin`, {
+      const response = await axios.get(`https://event-management-react-1.onrender.com/bookingsAdmin`, {
         withCredentials: true, // include credentials in the request
         headers: {
           Accept: "application/json",
@@ -177,7 +177,7 @@ const BookingsAdmin = () => {
     //consolelog(isApproved);
     try {
       const response = await axios.put(
-        `http://localhost:4000/bookingsEdit/${bookingId}`,
+        `https://event-management-react-1.onrender.com/bookingsEdit/${bookingId}`,
         {
           isApproved: isApproved,
           rejectionReason:

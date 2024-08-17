@@ -49,7 +49,7 @@ export const CalendarView = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/events`, {
+        const response = await axios.get(`https://event-management-react-1.onrender.com/events`, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export const CalendarView = () => {
   
     const fetchHallNames = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/halls`);
+        const response = await axios.get(`https://event-management-react-1.onrender.com/halls`);
         setHallNames(response.data.halls);
         console.log("Event",events);
   console.log("fHallNames",response.data.halls);

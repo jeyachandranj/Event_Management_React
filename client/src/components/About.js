@@ -37,7 +37,7 @@ const About = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:4000/emailVerificationLink`,
+        `https://event-management-react-1.onrender.com/emailVerificationLink`,
         {
           email,
         },
@@ -66,7 +66,7 @@ const About = () => {
   const callAboutPage = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/about`,
+        `https://event-management-react-1.onrender.com/about`,
         {
           withCredentials: true,
           headers: {

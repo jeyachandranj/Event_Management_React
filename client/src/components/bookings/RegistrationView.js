@@ -14,7 +14,7 @@ const RegistrationView = () => {
   const getEventRegistrationData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/getRegistration/${bookingId}`,
+        `https://event-management-react-1.onrender.com/getRegistration/${bookingId}`,
         {
           withCredentials: true, // include credentials in the request
           headers: {
@@ -47,7 +47,7 @@ const RegistrationView = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.put(`http://localhost:4000/eventRegisterEdit/${bookingId}`, {
+      const response = await axios.put(`https://event-management-react-1.onrender.com/eventRegisterEdit/${bookingId}`, {
         status: isApproved,
       }, {
         withCredentials: true, // include credentials in the request
@@ -82,7 +82,7 @@ const RegistrationView = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.put(`http://localhost:4000/eventparticipation/${bookingId}`, {
+      const response = await axios.put(`https://event-management-react-1.onrender.com/eventparticipation/${bookingId}`, {
         Participationstatus: isApproved
       }, {
         withCredentials: true, // include credentials in the request
