@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Set the DATABASE environment variable directly
-process.env.DATABASE = "mongodb://localhost:27017/event";
+process.env.DATABASE = "mongodb+srv://jeyachandranj:jj.jeyan@cluster0.pe8ib.mongodb.net/event-management";
 
 // Retrieve the value of the DATABASE environment variable
 const DB = process.env.DATABASE;
