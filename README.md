@@ -17,7 +17,6 @@ The **Event Management System** is a multi-role platform designed for seamless e
 ### 🌐 Frontend
 - ⚛️ **React.js** – Dynamic and interactive UI components
 - 🎨 **Tailwind CSS** – Responsive and modern styling
-- 🔄 **Redux** – State management for seamless interactions
 
 ### 🖥️ Backend
 - 🚀 **Express.js** – Fast and lightweight backend framework
@@ -30,7 +29,6 @@ The **Event Management System** is a multi-role platform designed for seamless e
 ### 🛠️ Additional Tools
 - 💳 **Razorpay** – Payment gateway for seamless transactions
 - 📡 **Socket.io** – Real-time updates and notifications
-- 🔍 **Nodemailer** – Email notifications for approvals and updates
 
 ---
 
@@ -50,11 +48,11 @@ The **Event Management System** is a multi-role platform designed for seamless e
 ```bash
 # Clone the repository
 git clone https://github.com/jeyachandranj/Event_Management_React.git
-cd client
+cd event-management
 
 # Install dependencies
 npm install
-
+```
 
 ### 🔧 Backend Setup
 ```bash
@@ -67,13 +65,12 @@ npm start
 
 ### 🌍 Frontend Setup
 ```bash
+cd client
+npm install
 
 # Start the frontend
-
-cd client
 npm start
-
-
+```
 
 ---
 
